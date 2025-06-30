@@ -1,60 +1,64 @@
 
+// InterfaceCliente
 public interface InterfaceCliente {
 
-	public int converterXmlParaJson(int dadosXml);	
-		
+	String converterXmlParaJson(string dadosXml);
 }
 
 #######################################
 
+// Adaptador
 public class Adaptador implements InterfaceCliente{
 
-	public ServicoJson adapt;
-	private int dadosXml;
-	private int dadosJson;
-	
-	public static void main(String[] args) {		
-		//ServicoJson dadosJson = new ServicoJson();
-	}
+	private ServicoJson servicoJson;
 
-	public int getDadosXml() {
-		return dadosXml;
-	}
+	public Adaptador(ServicoJson servicoJson) {
+        this.servicoJson = servicoJson;
+    }
 
-	public void setDadosXml(int dadosXml) {
-		this.dadosXml = dadosXml;
-	}
-	
-	public int getDadosJson() {
-		return dadosJson;
-	}
-
-	public void setDadosJson(int dadosJson) {
-		this.dadosJson = dadosJson;
-	}
-
-	@Override
-	public int converterXmlParaJson(int dadosXml) {
-		System.out.println("Convertendo Xml para Json!");
-		return dadosJson;		
-	}
+    @Override
+    public String converterXmlParaJson(String dadosXml) {
+        System.out.println("Convertendo XML para JSON...");
+        // Simulação de conversão: substitui tags fictícias por estrutura JSON
+        String dadosJson = "{\"dados\": \"" + dadosXml.replaceAll("<[^>]+>", "") + "\"}";
+        return servicoJson.processarJson(dadosJson);
+    }
 }
 
 ##########################
 
+// Cliente
 public class Cliente {
+
+	// XML fictício
+        String dadosXml = "<dados>Exemplo de conteúdo XML</dados>";
+
+        // Usando o adaptador
+        ServicoJson servico = new ServicoJson();
+        InterfaceCliente adaptador = new Adaptador(servico);
+
+        String resultado = adaptador.converterXmlParaJson(dadosXml);
+        System.out.println(resultado);
 
 }
 
 #########################
 
+// Classe de Serviço que é incompatível com o Cliente
 public class ServicoJson {	
-	
-	private int dadosJson;
 
-	public ServicoJson(int dadosJson) {
-		super();
-		this.dadosJson = dadosJson;
-	}
+	public String processarJson(String dadosJson) {
+        return "Dados JSON processados: " + dadosJson;
+    	}
 }
+
+Explicação dos participantes do padrão:
+
+| Papel no Padrão Adapter | Classe no Código   | Descrição                                                                                                                    |
+| ----------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------------------------- |
+| **Target**              | `InterfaceCliente` | A interface esperada pelo cliente. Define a interface que o cliente usa. No seu caso, exige o método `converterXmlParaJson`. |
+| **Client**              | `Cliente`          | A classe que usa o Target. Ela interage apenas com a interface `InterfaceCliente` e não sabe que existe um "adaptee".        |
+| **Adaptee**             | `ServicoJson`      | A classe existente com uma interface incompatível com o cliente. Ela entende apenas JSON, não XML.                           |
+| **Adapter**             | `Adaptador`        | A classe que implementa `InterfaceCliente` e traduz chamadas para o formato compreendido por `ServicoJson`.                  |
+
 
