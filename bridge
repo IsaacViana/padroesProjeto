@@ -2,9 +2,9 @@
 public interface Dispositivo {
 	
 	void ligar();
-    void desligar();
-    void setVolume(int volume);
-    int getVolume();
+    	void desligar();
+    	void setVolume(int volume);
+    	int getVolume();
 }
 
 ################
@@ -13,24 +13,24 @@ public interface Dispositivo {
 public class Tv implements Dispositivo{
 	
 	private boolean ligado = false;
-    private int volume = 10;
+    	private int volume = 10;
 
 	@Override
 	public void ligar() {
 		ligado = true;
-        System.out.println("TV ligada");		
+        	System.out.println("TV ligada");		
 	}
 
 	@Override
 	public void desligar() {
 		ligado = false;
-        System.out.println("TV desligada");		
+        	System.out.println("TV desligada");		
 	}
 
 	@Override
 	public void setVolume(int volume) {
 		this.volume = volume;
-        System.out.println("Volume da TV ajustado para: " + this.volume);		
+        	System.out.println("Volume da TV ajustado para: " + this.volume);		
 	}
 
 	@Override
@@ -45,24 +45,24 @@ public class Tv implements Dispositivo{
 public class Radio implements Dispositivo{
 	
 	private boolean ligado = false;
-    private int volume = 5;
+    	private int volume = 5;
 
 	@Override
 	public void ligar() {
 		ligado = true;
-        System.out.println("Rádio ligado");		
+        	System.out.println("Rádio ligado");		
 	}
 
 	@Override
 	public void desligar() {
 		ligado = false;
-        System.out.println("Rádio desligado");		
+       	 	System.out.println("Rádio desligado");		
 	}
 
 	@Override
 	public void setVolume(int volume) {
 		this.volume = volume;
-        System.out.println("Volume do Rádio ajustado para: " + this.volume);		
+        	System.out.println("Volume do Rádio ajustado para: " + this.volume);		
 	}
 
 	@Override
@@ -84,21 +84,21 @@ public abstract class ControleRemoto {
 	
 	public void ligar() {
 		dispositivo.ligar();
-    }
+    	}
 
-    public void desligar() {
-    	dispositivo.desligar();
-    }
+    	public void desligar() {
+	    	dispositivo.desligar();
+    	}
 
-    public void aumentarVolume() {
-        int volume = dispositivo.getVolume();
-        dispositivo.setVolume(volume + 1);
-    }
+    	public void aumentarVolume() {
+		int volume = dispositivo.getVolume();
+		dispositivo.setVolume(volume + 1);
+    	}
 
-    public void diminuirVolume() {
-        int volume = dispositivo.getVolume();
-        dispositivo.setVolume(volume - 1);
-    }	
+    	public void diminuirVolume() {
+       	 	int volume = dispositivo.getVolume();
+        	dispositivo.setVolume(volume - 1);
+    	}	
 }
 
 #####################
@@ -108,13 +108,12 @@ public class ControleAvancado extends ControleRemoto{
 
 	public ControleAvancado(Dispositivo dispositivo) {
 		super(dispositivo);
-		// TODO Auto-generated constructor stub
 	}
 
 	public void botaoMudo() {
-        System.out.println("Modo mudo ativado");
-        dispositivo.setVolume(0);
-    }
+        	System.out.println("Modo mudo ativado");
+        	dispositivo.setVolume(0);
+    	}
 }
 
 ################
@@ -128,20 +127,20 @@ public class Cliente {
 		 Dispositivo radio = new Radio();
 		 
 		 ControleRemoto controleTv = new ControleAvancado(tv);
-	   ControleRemoto controleRadio = new ControleAvancado(radio);
+	  	 ControleRemoto controleRadio = new ControleAvancado(radio);
 	     
-	   controleTv.ligar();
-     controleTv.aumentarVolume();
-	   ((ControleAvancado) controleTv).botaoMudo();
-	   controleTv.desligar();
+	   	controleTv.ligar();
+     		controleTv.aumentarVolume();
+	   	((ControleAvancado) controleTv).botaoMudo();
+	   	controleTv.desligar();
 
-	   System.out.println();
+	   	System.out.println();
 
-	   controleRadio.ligar();
-	   controleRadio.aumentarVolume();
-	   controleRadio.aumentarVolume();
-	   controleRadio.diminuirVolume();
-	   controleRadio.desligar();
+	  	controleRadio.ligar();
+	   	controleRadio.aumentarVolume();
+	   	controleRadio.aumentarVolume();
+	   	controleRadio.diminuirVolume();
+	   	controleRadio.desligar();
 	     
 	     /*
 	       Saída esperada:
