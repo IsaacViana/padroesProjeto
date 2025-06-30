@@ -1,0 +1,162 @@
+// Implementação – interface comum dos dispositivos
+public interface Dispositivo {
+	
+	void ligar();
+    void desligar();
+    void setVolume(int volume);
+    int getVolume();
+}
+
+################
+
+// Implementaçao concreta - Tv
+public class Tv implements Dispositivo{
+	
+	private boolean ligado = false;
+    private int volume = 10;
+
+	@Override
+	public void ligar() {
+		ligado = true;
+        System.out.println("TV ligada");		
+	}
+
+	@Override
+	public void desligar() {
+		ligado = false;
+        System.out.println("TV desligada");		
+	}
+
+	@Override
+	public void setVolume(int volume) {
+		this.volume = volume;
+        System.out.println("Volume da TV ajustado para: " + this.volume);		
+	}
+
+	@Override
+	public int getVolume() {
+		return this.volume;
+	}
+}
+
+##############
+
+//Implementação concreta - Rádio
+public class Radio implements Dispositivo{
+	
+	private boolean ligado = false;
+    private int volume = 5;
+
+	@Override
+	public void ligar() {
+		ligado = true;
+        System.out.println("Rádio ligado");		
+	}
+
+	@Override
+	public void desligar() {
+		ligado = false;
+        System.out.println("Rádio desligado");		
+	}
+
+	@Override
+	public void setVolume(int volume) {
+		this.volume = volume;
+        System.out.println("Volume do Rádio ajustado para: " + this.volume);		
+	}
+
+	@Override
+	public int getVolume() {
+		return this.volume;
+	}
+}
+
+###############
+
+// Abstração - ControleRemoto
+public abstract class ControleRemoto {
+	
+	protected Dispositivo dispositivo;
+
+	public ControleRemoto(Dispositivo dispositivo) {
+		this.dispositivo = dispositivo;
+	}
+	
+	public void ligar() {
+		dispositivo.ligar();
+    }
+
+    public void desligar() {
+    	dispositivo.desligar();
+    }
+
+    public void aumentarVolume() {
+        int volume = dispositivo.getVolume();
+        dispositivo.setVolume(volume + 1);
+    }
+
+    public void diminuirVolume() {
+        int volume = dispositivo.getVolume();
+        dispositivo.setVolume(volume - 1);
+    }	
+}
+
+#####################
+
+// Abstração refinada – ControleAvancado com botão "mudo"
+public class ControleAvancado extends ControleRemoto{
+
+	public ControleAvancado(Dispositivo dispositivo) {
+		super(dispositivo);
+		// TODO Auto-generated constructor stub
+	}
+
+	public void botaoMudo() {
+        System.out.println("Modo mudo ativado");
+        dispositivo.setVolume(0);
+    }
+}
+
+################
+
+// Cliente
+public class Cliente {
+
+	public static void main(String[] args) {
+		
+		 Dispositivo tv = new Tv();
+		 Dispositivo radio = new Radio();
+		 
+		 ControleRemoto controleTv = new ControleAvancado(tv);
+	   ControleRemoto controleRadio = new ControleAvancado(radio);
+	     
+	   controleTv.ligar();
+     controleTv.aumentarVolume();
+	   ((ControleAvancado) controleTv).botaoMudo();
+	   controleTv.desligar();
+
+	   System.out.println();
+
+	   controleRadio.ligar();
+	   controleRadio.aumentarVolume();
+	   controleRadio.aumentarVolume();
+	   controleRadio.diminuirVolume();
+	   controleRadio.desligar();
+	     
+	     /*
+	       Saída esperada:
+	       
+	       TV ligada
+		   Volume da TV ajustado para: 11
+		   Modo mudo ativado
+		   Volume da TV ajustado para: 0
+		   TV desligada
+
+		   Rádio ligado
+		   Volume do Rádio ajustado para: 6
+		   Volume do Rádio ajustado para: 7
+		   Volume do Rádio ajustado para: 6
+		   Rádio desligado
+	      */
+	}
+}
