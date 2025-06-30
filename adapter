@@ -1,0 +1,60 @@
+
+public interface InterfaceCliente {
+
+	public int converterXmlParaJson(int dadosXml);	
+		
+}
+
+#######################################
+
+public class Adaptador implements InterfaceCliente{
+
+	public ServicoJson adapt;
+	private int dadosXml;
+	private int dadosJson;
+	
+	public static void main(String[] args) {		
+		//ServicoJson dadosJson = new ServicoJson();
+	}
+
+	public int getDadosXml() {
+		return dadosXml;
+	}
+
+	public void setDadosXml(int dadosXml) {
+		this.dadosXml = dadosXml;
+	}
+	
+	public int getDadosJson() {
+		return dadosJson;
+	}
+
+	public void setDadosJson(int dadosJson) {
+		this.dadosJson = dadosJson;
+	}
+
+	@Override
+	public int converterXmlParaJson(int dadosXml) {
+		System.out.println("Convertendo Xml para Json!");
+		return dadosJson;		
+	}
+}
+
+##########################
+
+public class Cliente {
+
+}
+
+#########################
+
+public class ServicoJson {	
+	
+	private int dadosJson;
+
+	public ServicoJson(int dadosJson) {
+		super();
+		this.dadosJson = dadosJson;
+	}
+}
+
