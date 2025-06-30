@@ -1,6 +1,6 @@
 // Component - interface comum para folhas e composites
 public interface SistemaArquivos {
-	
+
 	 void mostrar();
 }
 
@@ -15,9 +15,10 @@ public class Arquivo implements SistemaArquivos{
 		this.nome = nome;
 	}
 
+	@Override
 	public void mostrar() {
-        System.out.println("Arquivo: " + nome);
-    }
+        	System.out.println("Arquivo: " + nome);
+    	}
 }
 
 ##################
@@ -29,7 +30,7 @@ import java.util.List;
 public class Pasta implements SistemaArquivos{
 	
 	private String nome;
-  private List<SistemaArquivos> listaDeObjetos = new ArrayList<>();
+  	private List<SistemaArquivos> listaDeObjetos = new ArrayList<>();
     
 	public Pasta(String nome) {
 		this.nome = nome;
@@ -37,18 +38,18 @@ public class Pasta implements SistemaArquivos{
     
 	public void add(SistemaArquivos arquivoOuPasta) {
 		listaDeObjetos.add(arquivoOuPasta);
-  }
+  	}
 
-  public void remove(SistemaArquivos arquivoOuPasta) {
-    	listaDeObjetos.remove(arquivoOuPasta);
-  }
+  	public void remove(SistemaArquivos arquivoOuPasta) {
+    		listaDeObjetos.remove(arquivoOuPasta);
+  	}
 
 	@Override
 	public void mostrar() {
 		System.out.println("Pasta: " + nome);
-        for (SistemaArquivos arquivoOuPasta : listaDeObjetos) {
-        	arquivoOuPasta.mostrar(); // chamada recursiva
-        }		
+	        for (SistemaArquivos arquivoOuPasta : listaDeObjetos) {
+	        	arquivoOuPasta.mostrar(); // chamada recursiva
+	        }		
 	}
 }
 
@@ -59,8 +60,8 @@ public class Cliente {
 
 	public static void main(String[] args) {
 		 	
-			Arquivo arquivo1 = new Arquivo("documento.txt");
-			Arquivo arquivo2 = new Arquivo("foto.jpg");
+		Arquivo arquivo1 = new Arquivo("documento.txt");
+		Arquivo arquivo2 = new Arquivo("foto.jpg");
 
 	        Pasta pasta1 = new Pasta("Documentos");
 	        pasta1.add(arquivo1);
@@ -76,10 +77,10 @@ public class Cliente {
 	        
 	        /* Saída esperada:
 	           Pasta: Raiz
-			   Pasta: Documentos
-			   Arquivo: documento.txt
-			   Pasta: Imagens
-			   Arquivo: foto.jpg 		         
+		   Pasta: Documentos
+		   Arquivo: documento.txt
+		   Pasta: Imagens
+		   Arquivo: foto.jpg 		         
 	         */
 	}
 }
