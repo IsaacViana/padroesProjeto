@@ -1,19 +1,23 @@
+// Component - Interface comum
 public interface Carro {
 	
-	public void caracterizaCarro();
+	void caracterizaCarro();
 }
 
 ####################
 
+// ConcreteComponent
 public class CarroConcreto implements Carro{
 
+	@Override
 	public void caracterizaCarro() {
-		// TODO Auto-generated method stub	
+	       System.out.println("Este é um carro básico.");	
 	}
 }
 
 ####################
 
+// Decorator base
 public class DecoradorBaseCarro implements Carro{
 
 	public Carro carro;	
@@ -22,59 +26,77 @@ public class DecoradorBaseCarro implements Carro{
 		this.carro = carro;
 	}
 
-	public void caracterizaCarro() {
-		//		
-	}
+	@Override
+    	public void caracterizaCarro() {
+        	carro.caracterizaCarro();
+    	}
 }  
 
 #######################
 
-public class DecoradorConcretoCarroAutomatico extends DecoradorBaseCarro{
+// Concrete Decorator
+public class DecoradorConcretoCarroAdicionaTetoSolar extends DecoradorBaseCarro{
 
-	public DecoradorConcretoCarroAutomatico(Carro carro) {
+	public DecoradorConcretoCarroAdicionaTetoSolar(Carro carro) {
 		super(carro);
 	}
-	
-	public  void caracterizaCarro() {
+
+	@Override
+	public void caracterizaCarro() { // Código extra que decora o objeto
 		super.caracterizaCarro();
-	}
-	
-	public void caracterizaAutomacao() { // Código extra que decora o objeto
-		System.out.println("Parabéns por adquirir o seu mais novo carro automático!");
+		System.out.println("Parabéns por adicionar teto solar no seu carro!");
 	}
 }
 
 ##################
 
-public class DecoradorConcretoCarroSemiAuto extends DecoradorBaseCarro{
+// Concrete Decorator
+public class DecoradorConcretoCarroAdicionaIA extends DecoradorBaseCarro{
 
-	public DecoradorConcretoCarroSemiAuto(Carro carro) {
-		super(carro);
+	public DecoradorConcretoCarroAdicionaIA(Carro carro) {
+	       super(carro);
 	}
-	
-	public  void caracterizaCarro() {
+
+	@Override
+	public void caracterizaCarro() { // Código extra que decora o objeto
 		super.caracterizaCarro();
-	}
-	
-	public void caracterizaSemiAutomacao() { // Código extra que decora o objeto
-		System.out.println("Parabéns por adquirir o seu mais novo carro semi-automático!");
+		System.out.println("Parabéns por adicionar IA no seu carro!");
 	}
 }
 
 #################
 
+// Cliente
 public class Cliente {
 	
-	public Carro carro;
-
 	public static void main(String[] args) {
-		Carro novoCarro = new CarroConcreto();
-		Carro novoCarroAutomatico = new DecoradorConcretoCarroAutomatico(novoCarro);
-		((DecoradorConcretoCarroAutomatico) novoCarroAutomatico).caracterizaAutomacao();
-		
-	/*	Carro novoCarro2 = new CarroConcreto();
-		Carro novoCarroSemiAutomatico = new DecoradorConcretoCarroSemiAuto(novoCarro2);
-		((DecoradorConcretoCarroSemiAuto) novoCarroSemiAutomatico).caracterizaSemiAutomacao();
-	*/
-	}
+
+        // Carro básico
+        Carro carroBasico = new CarroConcreto();
+
+        // Decorado com teto solar
+        Carro carroComTetoSolar = new DecoradorConcretoCarroAdicionaTetoSolar(carroBasico);
+        carroComTetoSolar.caracterizaCarro();
+
+        System.out.println("--------");
+
+        // Decorado com IA e depois com teto solar
+        Carro carroComposto = new DecoradorConcretoCarroAdicionaTetoSolar(
+                                  new DecoradorConcretoCarroAdicionaIA(
+                                      new CarroConcreto()
+                                  ));
+        carroComposto.caracterizaCarro();
+    }
 }  
+
+Participantes do padrão:
+
+| Participante                    | Classe                                                               |
+| ------------------------------- | -------------------------------------------------------------------- |
+| **Component (interface comum)** | `Carro`                                                              |
+| **ConcreteComponent**           | `CarroConcreto`                                                      |
+| **Decorator (abstrato/base)**   | `DecoradorBaseCarro`                                                 |
+| **ConcreteDecorator**           | `DecoradorConcretoCarroAutomatico`, `DecoradorConcretoCarroSemiAuto` |
+| **Client**                      | `Cliente`                                                            |
+
+
