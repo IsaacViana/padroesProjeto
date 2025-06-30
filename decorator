@@ -1,0 +1,80 @@
+public interface Carro {
+	
+	public void caracterizaCarro();
+}
+
+####################
+
+public class CarroConcreto implements Carro{
+
+	public void caracterizaCarro() {
+		// TODO Auto-generated method stub	
+	}
+}
+
+####################
+
+public class DecoradorBaseCarro implements Carro{
+
+	public Carro carro;	
+	
+	public DecoradorBaseCarro(Carro carro) {
+		this.carro = carro;
+	}
+
+	public void caracterizaCarro() {
+		//		
+	}
+}  
+
+#######################
+
+public class DecoradorConcretoCarroAutomatico extends DecoradorBaseCarro{
+
+	public DecoradorConcretoCarroAutomatico(Carro carro) {
+		super(carro);
+	}
+	
+	public  void caracterizaCarro() {
+		super.caracterizaCarro();
+	}
+	
+	public void caracterizaAutomacao() { // Código extra que decora o objeto
+		System.out.println("Parabéns por adquirir o seu mais novo carro automático!");
+	}
+}
+
+##################
+
+public class DecoradorConcretoCarroSemiAuto extends DecoradorBaseCarro{
+
+	public DecoradorConcretoCarroSemiAuto(Carro carro) {
+		super(carro);
+	}
+	
+	public  void caracterizaCarro() {
+		super.caracterizaCarro();
+	}
+	
+	public void caracterizaSemiAutomacao() { // Código extra que decora o objeto
+		System.out.println("Parabéns por adquirir o seu mais novo carro semi-automático!");
+	}
+}
+
+#################
+
+public class Cliente {
+	
+	public Carro carro;
+
+	public static void main(String[] args) {
+		Carro novoCarro = new CarroConcreto();
+		Carro novoCarroAutomatico = new DecoradorConcretoCarroAutomatico(novoCarro);
+		((DecoradorConcretoCarroAutomatico) novoCarroAutomatico).caracterizaAutomacao();
+		
+	/*	Carro novoCarro2 = new CarroConcreto();
+		Carro novoCarroSemiAutomatico = new DecoradorConcretoCarroSemiAuto(novoCarro2);
+		((DecoradorConcretoCarroSemiAuto) novoCarroSemiAutomatico).caracterizaSemiAutomacao();
+	*/
+	}
+}  
