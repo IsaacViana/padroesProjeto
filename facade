@@ -1,0 +1,92 @@
+// Subsistemas
+class Projetor {
+    public void ligar() {
+        System.out.println("Projetor ligado.");
+    }
+
+    public void desligar() {
+        System.out.println("Projetor desligado.");
+    }
+}
+
+class SistemaSom {
+    public void ligar() {
+        System.out.println("Sistema de som ligado.");
+    }
+
+    public void desligar() {
+        System.out.println("Sistema de som desligado.");
+    }
+}
+
+class Luzes {
+    public void escurecer() {
+        System.out.println("Luzes escurecidas.");
+    }
+
+    public void acender() {
+        System.out.println("Luzes acesas.");
+    }
+}
+
+class ReprodutorVideo {
+    public void ligar() {
+        System.out.println("Reprodutor de vídeo ligado.");
+    }
+
+    public void desligar() {
+        System.out.println("Reprodutor de vídeo desligado.");
+    }
+
+    public void reproduzirFilme(String nome) {
+        System.out.println("Reproduzindo filme: " + nome);
+    }
+}
+
+// A Facade
+class HomeTheaterFacade {
+    private Projetor projetor;
+    private SistemaSom som;
+    private Luzes luzes;
+    private ReprodutorVideo video;
+
+    public HomeTheaterFacade(Projetor p, SistemaSom s, Luzes l, ReprodutorVideo v) {
+        this.projetor = p;
+        this.som = s;
+        this.luzes = l;
+        this.video = v;
+    }
+
+    public void assistirFilme(String nomeFilme) {
+        System.out.println("Preparando para assistir um filme...");
+        luzes.escurecer();
+        projetor.ligar();
+        som.ligar();
+        video.ligar();
+        video.reproduzirFilme(nomeFilme);
+    }
+
+    public void encerrarSessao() {
+        System.out.println("Encerrando a sessão de cinema...");
+        video.desligar();
+        som.desligar();
+        projetor.desligar();
+        luzes.acender();
+    }
+}
+
+// Cliente
+public class Cliente {
+    public static void main(String[] args) {
+        Projetor projetor = new Projetor();
+        SistemaSom som = new SistemaSom();
+        Luzes luzes = new Luzes();
+        ReprodutorVideo video = new ReprodutorVideo();
+
+        HomeTheaterFacade homeTheater = new HomeTheaterFacade(projetor, som, luzes, video);
+
+        homeTheater.assistirFilme("O Senhor dos Anéis");
+        System.out.println("-----");
+        homeTheater.encerrarSessao();
+    }
+}
